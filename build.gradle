@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+group 'ua.mb'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+
+def ADB_HOME = System.getenv()['ADB_HOME']
+
+task startAdb(type:Exec) {
+    println ADB_HOME
+    commandLine = ['cmd', '/c', ADB_HOME+'adb start-server']
+    println 'Start ADB!!!!'
+
+}
+
+task killAdb(type:Exec) {
+    commandLine = ['cmd', '/c', ADB_HOME+'adb kill-server']
+    println 'Kill ADB!!!!!!!!!'
+}
+
+test{
+    maxParallelForks = 1
+
+    useTestNG {
+        suites 'src/test/java/testng.xml'
+    }
+}
+
+test.dependsOn(startAdb)
+killAdb.dependsOn(test)
+
+dependencies {
+    testCompile 'org.testng:testng:6.10'
+    compile 'org.seleniumhq.selenium:selenium-java:3.14.0'
+}
+

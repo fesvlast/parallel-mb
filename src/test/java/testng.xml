@@ -1,0 +1,28 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Pereval Test suite" parallel="tests" thread-count="3" time-out="60000">
+    <test name="Sony">
+        <parameter name="device_id" value="YT91195AKX"/>
+        <parameter name="user_agent"
+                   value=""/>
+        <classes>
+            <class name="ua.mb.web.pereval.LinksRoutingTest1" />
+        </classes>
+    </test>
+    <test name="Prestijio 1">
+        <parameter name="device_id" value="PSPC1974249393" />
+        <parameter name="user_agent"
+                   value="Mozilla/5.0 (Linux; Android 7.1.1; SM-T350 Build/NMF26X) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.87 Safari/537.36"/>
+        <classes>
+            <class name="ua.mb.web.pereval.LinksRoutingTest2" />
+        </classes>
+    </test>
+    <test name="Prestijio 2">
+        <parameter name="device_id" value="PSPC1974253034" />
+        <parameter name="user_agent"
+                   value="Mozilla/5.0 (Linux; Android 7.0; SM-J730GM Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.111 Mobile Safari/537.36"/>
+        <classes>
+            <class name="ua.mb.web.pereval.LinksRoutingTest3" />
+        </classes>
+    </test>
+</suite>
