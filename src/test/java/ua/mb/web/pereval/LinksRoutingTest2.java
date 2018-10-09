@@ -16,8 +16,7 @@ public class LinksRoutingTest2 {
     @Parameters({ "device_id", "user_agent" })
     public void beforeClass(String deviceId, String userAgent) {
         this.device = new Device(deviceId, userAgent);
-        this.device.turnOnMobileInternet();
-        this.device.isConnectedToInternet();
+        this.device.start();
     }
 
 

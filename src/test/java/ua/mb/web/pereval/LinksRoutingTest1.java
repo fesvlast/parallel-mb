@@ -11,13 +11,17 @@ public class LinksRoutingTest1 {
 
     private Device device;
 
+    private String deviceId;
+
+    public LinksRoutingTest1(String deviceId){
+        this.deviceId = deviceId;
+    }
+
 
     @BeforeClass
-    @Parameters({"device_id"})
-    public void beforeClass(String deviceId) {
-        this.device = new Device(deviceId, null);
-        this.device.turnOnMobileInternet();
-        this.device.isConnectedToInternet();
+    public void beforeClass() {
+        this.device = new Device(this.deviceId, null);
+        this.device.start();
     }
 
     @Test

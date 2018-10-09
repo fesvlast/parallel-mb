@@ -43,7 +43,7 @@ public class MobileFactory {
      * @return
      * @throws Exception
      */
-    private List<String> getAllRegisteredDeviceID() throws Exception {
+    public List<String> getAllRegisteredDeviceID() throws Exception {
         CommandExecutor exec = new CommandExecutor();
         String buffer = exec.executeCommand(new CommandBuilder().getListOfConnectedDevices());
 

@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="RBK" parallel="instances" thread-count="3" time-out="200000">
+    <test name="Sony">
+        <parameter name="device_id" value="YT91195AKX"/>
+        <parameter name="user_agent"
+                   value=""/>
+        <classes>
+            <class name="ua.mb.web.pereval.TestFactory" />
+        </classes>
+    </test>
+
+</suite>
