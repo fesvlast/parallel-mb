@@ -15,7 +15,7 @@ public class TestFactory {
         Object[] methods = new Object[list.size()];
 
         for (int i = 0; i <list.size() ; i++) {
-            methods[i] = new LinksRoutingTest1(list.get(i));
+            methods[i] = new LinksRoutingTest(list.get(i), null);
         }
 
         return methods;

@@ -8,6 +8,8 @@ public class Device {
 
     private String deviceId;
 
+    private String userAgent;
+
     private CommandExecutor executor;
 
     private CommandBuilder command;
@@ -17,9 +19,9 @@ public class Device {
 
     public Device(String deviceId, String userAgent){
         this.deviceId = deviceId;
+        this.userAgent = userAgent;
         this.executor = new CommandExecutor();
         this.command = new CommandBuilder();
-        this.wdw = new WebDriverWrapper(deviceId, userAgent);
     }
 
 
@@ -67,6 +69,9 @@ public class Device {
     }
 
     public WebDriverWrapper getWebDriverWrapper (){
+        if(this.wdw == null){
+            this.wdw = new WebDriverWrapper(deviceId, userAgent);
+        }
         return this.wdw;
     }
 
