@@ -2,6 +2,7 @@ package ua.mb.web.pereval;
 
 import org.testng.annotations.Factory;
 import ua.mb.core.MobileFactory;
+import ua.mb.uag.UserAgentParser;
 
 import java.util.List;
 
@@ -15,7 +16,11 @@ public class TestFactory {
         Object[] methods = new Object[list.size()];
 
         for (int i = 0; i <list.size() ; i++) {
-            methods[i] = new LinksRoutingTest(list.get(i), null);
+            String userAgentStr = UserAgentParser
+                    .getUserAgentParser()
+                    .getRandomUserAgent()
+                    .getAgentStr();
+            methods[i] = new LinksRoutingTest(list.get(i), userAgentStr);
         }
 
         return methods;

@@ -12,11 +12,17 @@ import java.util.Random;
 
 public class UserAgentParser {
 
-    List<UserAgent> userAgentList;
+    private List<UserAgent> userAgentList;
+    private static UserAgentParser parser;
+
+    private UserAgentParser(){
+
+    }
 
 
 
-    private List<UserAgent> readlUserAgents() throws IOException{
+
+    private List<UserAgent> readUserAgents() throws IOException{
 
         this.userAgentList = new ArrayList<>();
 
@@ -48,7 +54,7 @@ public class UserAgentParser {
     public List<UserAgent> getAllUserAgents(){
         if (this.userAgentList == null){
             try{
-                this.userAgentList = this.readlUserAgents();
+                this.userAgentList = this.readUserAgents();
             }catch (IOException e){
                 System.out.println("Can't parse json file!   "+e);
             }
@@ -61,6 +67,13 @@ public class UserAgentParser {
         Random rand = new Random();
         int randomNumber = rand.nextInt(this.getAllUserAgents().size());
         return this.getAllUserAgents().get(randomNumber);
+    }
+
+    public static UserAgentParser getUserAgentParser(){
+        if (parser == null){
+            parser = new UserAgentParser();
+        }
+        return parser;
     }
 
 
