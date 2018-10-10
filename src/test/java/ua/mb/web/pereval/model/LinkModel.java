@@ -28,7 +28,7 @@ public class LinkModel {
         driver.get(url);
         List<WebElement> linksElements = driver.findElements(By.cssSelector(".sele-test a"));
         Random rand = new Random();
-        int number = rand.nextInt(3);
+        int number = rand.nextInt(linksElements.size());
         this.currentLinkElement = linksElements.get(number);
     }
 
