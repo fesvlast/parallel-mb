@@ -30,7 +30,7 @@ test{
     maxParallelForks = 1
 
     useTestNG {
-        suites 'src/test/java/testng.xml'
+        suites 'src/test/java/testngFactory.xml'
     }
 }
 
