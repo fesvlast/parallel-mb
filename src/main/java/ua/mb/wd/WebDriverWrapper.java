@@ -29,6 +29,7 @@ public class WebDriverWrapper {
         }
         options.addArguments("disable-infobars");
         options.addArguments("start-maximized");
+        options.addArguments("--disable-notifications");
         options.setExperimentalOption("androidPackage", "com.android.chrome");
         options.setExperimentalOption("androidDeviceSerial", deviceId);
         options.setCapability("applicationCacheEnabled", false);
