@@ -1,6 +1,7 @@
 package ua.mb.wd;
 
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -27,6 +28,7 @@ public class WebDriverWrapper {
         if (userAgent != null && !userAgent.isEmpty()){
             options.addArguments("user-agent="+ userAgent);
         }
+        options.setPageLoadStrategy(PageLoadStrategy.NONE);
         options.addArguments("disable-infobars");
         options.addArguments("start-maximized");
         options.addArguments("--disable-notifications");
@@ -34,8 +36,9 @@ public class WebDriverWrapper {
         options.setExperimentalOption("androidDeviceSerial", deviceId);
         options.setCapability("applicationCacheEnabled", false);
         this.driver = new ChromeDriver(options);
-        this.wait = new WebDriverWait(driver, 15);
+        this.wait = new WebDriverWait(driver, 10);
     }
+
 
 
     public WebDriver getDriver(){

@@ -14,9 +14,19 @@ let testScript = ()=>{
     let currentLinks = [];
     let foreignLinks = []
     let exceptions = ['#','/'];
-    console.log();
+
     function isIgnoredLink(element){
-        return (window.location.origin + '/#') == element.href;
+        if((window.location.origin + '/#') == element.href){
+            return true
+        }
+        if(element.href.includes('facebook')){
+            return true
+        }
+        if(element.href.includes('#')){
+            return true
+        }
+
+        return false;
     }
 
     elements.forEach(function(item) {

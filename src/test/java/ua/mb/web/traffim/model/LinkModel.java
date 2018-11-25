@@ -4,7 +4,7 @@ package ua.mb.web.traffim.model;
         import org.apache.commons.codec.Charsets;
         import org.apache.commons.lang3.ArrayUtils;
         import org.openqa.selenium.*;
-        import org.openqa.selenium.support.ui.ExpectedConditions;
+        import org.openqa.selenium.support.ui.ExpectedCondition;
         import org.openqa.selenium.support.ui.WebDriverWait;
         import ua.mb.wd.WebDriverWrapper;
 
@@ -25,19 +25,24 @@ public class LinkModel {
     }
 
     public void waitForPageLoaded() {
-        try {
+       try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-       /* ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+
+      System.out.println("Wait completed");
+    }
+
+    public void waitInitialPageLoaded(){
+        ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
         try {
             Thread.sleep(1000);
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 12);
             wait.until(expectation);
         } catch (Throwable error) {
            System.out.println("Failed to wait page loaded");
-        }*/
+        }
     }
 
     //To do Needs refactoring
@@ -64,8 +69,6 @@ public class LinkModel {
         Thread.sleep(500);
     }
 
-
-
     public String getCurrentHostName(){
         JavascriptExecutor js = (JavascriptExecutor) this.driver;
         return js.executeScript("return window.location.hostname;").toString();
@@ -84,16 +87,20 @@ public class LinkModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Thread.sleep(10000);
+        Thread.sleep(1000);
         return null;
     }
 
     public void findRandomLink(){
-        driver.get(url);
-        List<WebElement> linksElements = driver.findElements(By.cssSelector("a.traffim-title-link"));
+        driver.get(this.url);
+        this.waitInitialPageLoaded();
+       List<WebElement> linksElements = driver.findElements(By.cssSelector("a.traffim-title-link"));
 
         Random rand = new Random();
-        int number = rand.nextInt(linksElements.size());
+        int number = 1;
+        if(linksElements.size()> 0){
+            number = rand.nextInt(linksElements.size());
+        }
         this.currentLinkElement = linksElements.get(number);
         this.currentLinkElement.click();
     }
@@ -102,8 +109,7 @@ public class LinkModel {
     public void switchToOpenBrowserTab(){
         String mainWindowId = driver.getWindowHandle();
         String newWinId = "";
-       // this.currentLinkElement.click();
-        //wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+
         Set<String> allWindows = driver.getWindowHandles();
 
         for (String winId: allWindows) {
@@ -117,7 +123,8 @@ public class LinkModel {
             driver.close();
             driver.switchTo().window(newWinId);
         }
-        System.out.println("Old win: " + driver.getTitle());
+        this.waitInitialPageLoaded();
+        System.out.println("Current title: " + driver.getTitle());
     }
 
     public void findHomeLinkAndMove(){
@@ -138,69 +145,5 @@ public class LinkModel {
         }
     }
 
-    public void getLinkOnPage() {
-        String currentHost = this.getCurrentHostName();
-        System.out.println("Host: " + currentHost);
-
-        try {
-            this.scrollToBottomAndUp();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        List<WebElement> listOfAllLinks = driver.findElements(By.tagName("a"));
-        List<WebElement> allHomeLinks = new ArrayList<>();
-        List<WebElement> allForeignLinks = new ArrayList<>();
-        System.out.println("All links: "+listOfAllLinks.size());
-        for (WebElement currentElement: listOfAllLinks) {
-           try{
-               if ( currentElement.isDisplayed()&& currentElement.isEnabled() && currentElement.getAttribute("href").contains("http") ){
-                   System.out.println(currentElement.getAttribute("href"));
-
-                   if(currentElement.getAttribute("href").contains(currentHost)){
-                       allHomeLinks.add(currentElement);
-                       wait.until(ExpectedConditions.elementToBeClickable(currentElement));
-                       System.out.println(currentElement.getAttribute("href"));
-                       // currentElement.click();
-                       // break;
-                   }else {
-                       allForeignLinks.add(currentElement);
-                       //  System.out.println(currentElement.getAttribute("href"));
-                   }
-
-               }
-           }catch (NullPointerException ex){
-               System.out.println("NullPointerException occured");
-           }
-        }
-
-       // return new LinkPageStorage(currentHost, allHomeLinks, allForeignLinks);
-        System.out.println("All home links: "+allHomeLinks.size());
-        System.out.println("All foreign links: "+allForeignLinks.size());
-
-
-
-      /*  for (int i = 0; i < 10 ; i++) {
-            try {
-                Random rand = new Random();
-                int number = rand.nextInt(allHomeLinks.size());
-                WebElement randomLink = allHomeLinks.get(number);
-                Actions actions = new Actions(driver);
-                actions.moveToElement(randomLink);
-                System.out.println(randomLink.getAttribute("href"));
-                actions.perform();
-                randomLink.click();
-            }catch (StaleElementReferenceException ex){
-                System.out.println("StaleElementReferenceException occured");
-            }
-        }
-
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
-    }
 }
 
