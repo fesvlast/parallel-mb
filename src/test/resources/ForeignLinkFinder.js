@@ -1,5 +1,4 @@
-return ()=>{
-
+let testScript = ()=>{
 
 function isHidden(el) {
     var style = window.getComputedStyle(el);
@@ -26,9 +25,10 @@ elements.forEach(function(item) {
 
   if(!isHidden(item) && !isIgnoredLink(item)){
         if(item.href.includes(currentHost) ){
-           console.log(isNotIgnoredLink(item));
+           console.log(isIgnoredLink(item));
            currentLinks.push(item);
         }else{
+            console.log(item.href);
             foreignLinks.push(item);
         }
    }
@@ -36,12 +36,19 @@ elements.forEach(function(item) {
 console.log('Total: '+elements.length);
 console.log('Current: '+currentLinks.length);
 console.log('Foreign: '+foreignLinks.length);
+
  let num = randomIntFromInterval(0, foreignLinks.length);
 
  foreignLinks[num].scrollIntoView();
 
 setTimeout(()=>{ foreignLinks[num].click(); return foreignLinks[num].href}, 1000);
+     return foreignLinks[num].href;
 }
+
+let urlClickedForeign = testScript();
+
+return urlClickedForeign;
+
 
 
 

@@ -25,19 +25,31 @@ public class LinksRoutingTest {
         this.device.start();
         LinkModel model = new LinkModel(device.getWebDriverWrapper());
         model.findRandomLink();
+
         model.switchToOpenBrowserTab();
         model.waitForPageLoaded();
-
         model.scrollToBottomAndUp();
-        model.executeScriptFromFile();
+        model.findHomeLinkAndMove();
 
+        model.waitForPageLoaded();
         model.switchToOpenBrowserTab();
         model.scrollToBottomAndUp();
-        model.executeScriptFromFile();
+        model.findHomeLinkAndMove();
 
+        model.waitForPageLoaded();
         model.switchToOpenBrowserTab();
         model.scrollToBottomAndUp();
-        model.executeScriptFromFile();
+        model.findHomeLinkAndMove();
+
+        model.waitForPageLoaded();
+        model.switchToOpenBrowserTab();
+        model.scrollToBottomAndUp();
+        model.findForeignLinkAndMove();
+
+        model.waitForPageLoaded();
+        model.switchToOpenBrowserTab();
+        model.scrollToBottomAndUp();
+
     }
 
 

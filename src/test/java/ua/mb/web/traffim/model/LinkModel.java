@@ -51,17 +51,17 @@ public class LinkModel {
             acc +=1000;
             arr[i] = acc;
             js.executeScript("window.scrollTo(0,"+acc+");");
-            Thread.sleep(800);
+            Thread.sleep(500);
         }
         js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
-        Thread.sleep(800);
+        Thread.sleep(500);
         ArrayUtils.reverse(arr);
         for (int i = 0; i < divider ; i++) {
             js.executeScript("window.scrollTo(0,"+arr[i]+");");
-            Thread.sleep(800);
+            Thread.sleep(500);
         }
         js.executeScript("window.scrollTo(0,0)");
-        Thread.sleep(800);
+        Thread.sleep(500);
     }
 
 
@@ -71,25 +71,24 @@ public class LinkModel {
         return js.executeScript("return window.location.hostname;").toString();
     }
 
-    public void executeScriptFromFile() throws InterruptedException {
+    private String executeScriptFromFile(String fileName) throws InterruptedException {
         Thread.sleep(1000);
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        File file = new File(classLoader.getResource("HomeLinkFinder.js").getFile());
-        //File is found
-        System.out.println("File Found : " + file.exists());
+        File file = new File(classLoader.getResource(fileName).getFile());
 
         String fileContents = null;
         try {
             fileContents = Files.toString(file, Charsets.UTF_8);
             JavascriptExecutor js = (JavascriptExecutor)driver;
-            js.executeScript(fileContents);
+            return js.executeScript(fileContents).toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
         Thread.sleep(10000);
+        return null;
     }
 
-    public void findRandomLink() throws InterruptedException{
+    public void findRandomLink(){
         driver.get(url);
         List<WebElement> linksElements = driver.findElements(By.cssSelector("a.traffim-title-link"));
 
@@ -100,7 +99,7 @@ public class LinkModel {
     }
 
 
-    public void switchToOpenBrowserTab() throws InterruptedException{
+    public void switchToOpenBrowserTab(){
         String mainWindowId = driver.getWindowHandle();
         String newWinId = "";
        // this.currentLinkElement.click();
@@ -119,6 +118,24 @@ public class LinkModel {
             driver.switchTo().window(newWinId);
         }
         System.out.println("Old win: " + driver.getTitle());
+    }
+
+    public void findHomeLinkAndMove(){
+        try {
+            String link = this.executeScriptFromFile("HomeLinkFinder.js");
+            System.out.println("This Home link was clicked: " + link);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void findForeignLinkAndMove(){
+        try {
+            String link = this.executeScriptFromFile("ForeignLinkFinder.js");
+            System.out.println("This Foreign link was clicked: " + link);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void getLinkOnPage() {
