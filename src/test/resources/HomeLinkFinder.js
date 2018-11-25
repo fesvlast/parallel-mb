@@ -25,7 +25,6 @@ let testScript = ()=>{
         if(element.href.includes('#')){
             return true
         }
-
         return false;
     }
 
@@ -49,10 +48,20 @@ let testScript = ()=>{
      console.log(currentLinks[num]);
      currentLinks[num].scrollIntoView();
 
-      setTimeout(()=>{
-        currentLinks[num].click();
-      }, 1000);
-     return currentLinks[num].href;
+     for(let i=0; i< 3; i++){
+        try {
+             let num = randomIntFromInterval(0, currentLinks.length);
+             console.log(num);
+             console.log(currentLinks[num]);
+             currentLinks[num].scrollIntoView();
+             setTimeout(()=>{
+                     currentLinks[num].click();
+                   }, 1000);
+             return currentLinks[num].href;
+        }
+        catch(err) {}
+     }
+    return null;
 }
 let urlClicked = testScript();
 

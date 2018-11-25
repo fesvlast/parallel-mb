@@ -38,7 +38,7 @@ public class LinkModel {
         ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
         try {
             Thread.sleep(1000);
-            WebDriverWait wait = new WebDriverWait(driver, 12);
+            WebDriverWait wait = new WebDriverWait(driver, 15);
             wait.until(expectation);
         } catch (Throwable error) {
            System.out.println("Failed to wait page loaded");
@@ -97,7 +97,7 @@ public class LinkModel {
        List<WebElement> linksElements = driver.findElements(By.cssSelector("a.traffim-title-link"));
 
         Random rand = new Random();
-        int number = 1;
+        int number = 0;
         if(linksElements.size()> 0){
             number = rand.nextInt(linksElements.size());
         }
