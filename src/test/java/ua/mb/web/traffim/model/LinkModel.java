@@ -1,16 +1,16 @@
 package ua.mb.web.traffim.model;
 
+        import com.google.common.io.Files;
+        import org.apache.commons.codec.Charsets;
         import org.apache.commons.lang3.ArrayUtils;
         import org.openqa.selenium.*;
-        import org.openqa.selenium.interactions.Actions;
-        import org.openqa.selenium.support.ui.ExpectedCondition;
         import org.openqa.selenium.support.ui.ExpectedConditions;
         import org.openqa.selenium.support.ui.WebDriverWait;
         import ua.mb.wd.WebDriverWrapper;
 
+        import java.io.File;
+        import java.io.IOException;
         import java.util.*;
-        import java.util.regex.Matcher;
-        import java.util.regex.Pattern;
 
 public class LinkModel {
     public final String url = "https://ua.traffim.com/j.php";
@@ -25,25 +25,29 @@ public class LinkModel {
     }
 
     public void waitForPageLoaded() {
-        ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+       /* ExpectedCondition<Boolean> expectation = driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete");
         try {
             Thread.sleep(1000);
             WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(expectation);
         } catch (Throwable error) {
            System.out.println("Failed to wait page loaded");
-        }
+        }*/
     }
 
     //To do Needs refactoring
     public void scrollToBottomAndUp() throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) this.driver;
-       // int height = Integer.parseInt(js.executeScript("return document.body.scrollHeight").toString());
-        int devider = 5;
+        int divider = 5;
         int acc = 0;
-        int[] arr = new int[devider];
+        int[] arr = new int[divider];
 
-        for (int i = 0; i < devider; i++) {
+        for (int i = 0; i < divider; i++) {
             acc +=1000;
             arr[i] = acc;
             js.executeScript("window.scrollTo(0,"+acc+");");
@@ -52,7 +56,7 @@ public class LinkModel {
         js.executeScript("window.scrollTo(0,document.body.scrollHeight);");
         Thread.sleep(800);
         ArrayUtils.reverse(arr);
-        for (int i = 0; i < devider ; i++) {
+        for (int i = 0; i < divider ; i++) {
             js.executeScript("window.scrollTo(0,"+arr[i]+");");
             Thread.sleep(800);
         }
@@ -60,22 +64,29 @@ public class LinkModel {
         Thread.sleep(800);
     }
 
-    public String extractHost(String str){
-        Pattern pattern = Pattern.compile("((http|https):\\/\\/(\\w+(.\\w+){1,3}.(ua|com|ru|net))\\/)");
-        Matcher matcher = pattern.matcher(str);
-        if (matcher.find())
-        {
-            System.out.println(matcher.group(1));
-            return matcher.group(1);
-        }else {
-            return null;
-        }
-    }
+
 
     public String getCurrentHostName(){
         JavascriptExecutor js = (JavascriptExecutor) this.driver;
         return js.executeScript("return window.location.hostname;").toString();
+    }
 
+    public void executeScriptFromFile() throws InterruptedException {
+        Thread.sleep(1000);
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        File file = new File(classLoader.getResource("HomeLinkFinder.js").getFile());
+        //File is found
+        System.out.println("File Found : " + file.exists());
+
+        String fileContents = null;
+        try {
+            fileContents = Files.toString(file, Charsets.UTF_8);
+            JavascriptExecutor js = (JavascriptExecutor)driver;
+            js.executeScript(fileContents);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Thread.sleep(10000);
     }
 
     public void findRandomLink() throws InterruptedException{
@@ -85,33 +96,32 @@ public class LinkModel {
         Random rand = new Random();
         int number = rand.nextInt(linksElements.size());
         this.currentLinkElement = linksElements.get(number);
+        this.currentLinkElement.click();
     }
 
-
-    public void jsLinksFinder(){
-        JavascriptExecutor js = (JavascriptExecutor) this.driver;
-        js.executeScript("Array.from(document.getElementsByTagName(\"a\")).forEach(function(item) {\n" +
-                "   console.log(item.href);\n" +
-                "});");
-    }
 
     public void switchToOpenBrowserTab() throws InterruptedException{
         String mainWindowId = driver.getWindowHandle();
         String newWinId = "";
-        this.currentLinkElement.click();
-        wait.until(ExpectedConditions.numberOfWindowsToBe(2));
+       // this.currentLinkElement.click();
+        //wait.until(ExpectedConditions.numberOfWindowsToBe(2));
         Set<String> allWindows = driver.getWindowHandles();
+
         for (String winId: allWindows) {
             if (!mainWindowId.equals(winId)){
                 newWinId = winId;
             }
         }
-        driver.switchTo().window(newWinId);
+
+        System.out.println("ID: " + newWinId);
+        if( allWindows.size()> 1){
+            driver.close();
+            driver.switchTo().window(newWinId);
+        }
         System.out.println("Old win: " + driver.getTitle());
     }
 
     public void getLinkOnPage() {
-     //   String currentHost = this.extractHost(driver.getCurrentUrl());
         String currentHost = this.getCurrentHostName();
         System.out.println("Host: " + currentHost);
 
@@ -152,7 +162,7 @@ public class LinkModel {
 
 
 
-        for (int i = 0; i < 10 ; i++) {
+      /*  for (int i = 0; i < 10 ; i++) {
             try {
                 Random rand = new Random();
                 int number = rand.nextInt(allHomeLinks.size());
@@ -173,7 +183,7 @@ public class LinkModel {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+*/
     }
 }
 

@@ -4,7 +4,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import ua.mb.Device;
 import ua.mb.web.traffim.model.LinkModel;
-import ua.mb.web.traffim.model.LinkPageStorage;
 
 public class LinksRoutingTest {
 
@@ -28,7 +27,17 @@ public class LinksRoutingTest {
         model.findRandomLink();
         model.switchToOpenBrowserTab();
         model.waitForPageLoaded();
-        model.getLinkOnPage();
+
+        model.scrollToBottomAndUp();
+        model.executeScriptFromFile();
+
+        model.switchToOpenBrowserTab();
+        model.scrollToBottomAndUp();
+        model.executeScriptFromFile();
+
+        model.switchToOpenBrowserTab();
+        model.scrollToBottomAndUp();
+        model.executeScriptFromFile();
     }
 
 

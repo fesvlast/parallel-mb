@@ -1,3 +1,6 @@
+return ()=>{
+
+
 function isHidden(el) {
     var style = window.getComputedStyle(el);
     return (style.display === 'none') && (style.visibility === 'visible');
@@ -14,14 +17,14 @@ let currentLinks = [];
 let foreignLinks = []
 let exceptions = ['#','/'];
 console.log();
-function isNotIgnoredLink(element){
-    return (window.location.origin + '/#') != element.href;
+function isIgnoredLink(element){
+    return (window.location.origin + '/#') == element.href;
 }
 
 elements.forEach(function(item) {
   let currentHost = window.location.hostname;
 
-  if(!isHidden(item) && isNotIgnoredLink(item)){
+  if(!isHidden(item) && !isIgnoredLink(item)){
         if(item.href.includes(currentHost) ){
            console.log(isNotIgnoredLink(item));
            currentLinks.push(item);
@@ -33,14 +36,15 @@ elements.forEach(function(item) {
 console.log('Total: '+elements.length);
 console.log('Current: '+currentLinks.length);
 console.log('Foreign: '+foreignLinks.length);
- let num = randomIntFromInterval(0, currentLinks.length);
- console.log(num);
- console.log(currentLinks[num]);
- currentLinks[num].scrollIntoView();
+ let num = randomIntFromInterval(0, foreignLinks.length);
 
-  setTimeout(()=>{
-    currentLinks[num].click();
-  }, 10000);
+ foreignLinks[num].scrollIntoView();
+
+setTimeout(()=>{ foreignLinks[num].click(); return foreignLinks[num].href}, 1000);
+}
+
+
+
 
 
 
