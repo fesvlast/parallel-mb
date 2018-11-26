@@ -26,12 +26,11 @@ public class LinkModel {
 
     public void waitForPageLoaded() {
        try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-      System.out.println("Wait completed");
+     // System.out.println("Wait completed");
     }
 
     public void waitInitialPageLoaded(){
@@ -79,19 +78,24 @@ public class LinkModel {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
 
-        String fileContents = null;
-        try {
-            fileContents = Files.toString(file, Charsets.UTF_8);
-            JavascriptExecutor js = (JavascriptExecutor)driver;
-            return js.executeScript(fileContents).toString();
-        } catch (IOException e) {
-            e.printStackTrace();
+        for (int i = 0; i < 3; i++) {
+            try {
+                Thread.sleep(1000);
+                String fileContents = Files.toString(file, Charsets.UTF_8);
+                JavascriptExecutor js = (JavascriptExecutor)driver;
+                return js.executeScript(fileContents).toString();
+
+            }catch (NullPointerException e){
+                System.err.println(e);
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        Thread.sleep(1000);
+       // Thread.sleep(1000);
         return null;
     }
 
-    public void findRandomLink(){
+    public void findRandomLinkAndClick(){
         driver.get(this.url);
         this.waitInitialPageLoaded();
        List<WebElement> linksElements = driver.findElements(By.cssSelector("a.traffim-title-link"));

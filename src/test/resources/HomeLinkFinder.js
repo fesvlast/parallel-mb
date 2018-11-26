@@ -43,10 +43,6 @@ let testScript = ()=>{
     console.log('Total: '+elements.length);
     console.log('Current: '+currentLinks.length);
     console.log('Foreign: '+foreignLinks.length);
-     let num = randomIntFromInterval(0, currentLinks.length);
-     console.log(num);
-     console.log(currentLinks[num]);
-     currentLinks[num].scrollIntoView();
 
      for(let i=0; i< 3; i++){
         try {
