@@ -16,15 +16,10 @@ let testScript = ()=>{
     let exceptions = ['#','/'];
 
     function isIgnoredLink(element){
-        if((window.location.origin + '/#') == element.href){
-            return true
-        }
-        if(element.href.includes('facebook')){
-            return true
-        }
-        if(element.href.includes('#')){
-            return true
-        }
+        if((window.location.origin + '/#') == element.href) return true;
+        if((window.location.origin + '/') == element.href) return true;
+        if(element.href.includes('facebook')) return true;
+        if(element.href.includes('#')) return true;
         return false;
     }
 
