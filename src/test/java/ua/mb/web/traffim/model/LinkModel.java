@@ -1,7 +1,5 @@
 package ua.mb.web.traffim.model;
 
-        import com.google.common.io.Files;
-        import org.apache.commons.codec.Charsets;
         import org.apache.commons.lang3.ArrayUtils;
         import org.openqa.selenium.*;
         import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -10,6 +8,9 @@ package ua.mb.web.traffim.model;
 
         import java.io.File;
         import java.io.IOException;
+        import java.nio.charset.Charset;
+        import java.nio.file.Files;
+        import java.nio.file.Paths;
         import java.util.*;
 
 public class LinkModel {
@@ -68,6 +69,7 @@ public class LinkModel {
         Thread.sleep(500);
     }
 
+
     public String getCurrentHostName(){
         JavascriptExecutor js = (JavascriptExecutor) this.driver;
         return js.executeScript("return window.location.hostname;").toString();
@@ -81,7 +83,7 @@ public class LinkModel {
         for (int i = 0; i < 3; i++) {
             try {
                 Thread.sleep(1000);
-                String fileContents = Files.toString(file, Charsets.UTF_8);
+                String fileContents = this.readFile(file, Charset.forName("UTF-8"));
                 JavascriptExecutor js = (JavascriptExecutor)driver;
                 return js.executeScript(fileContents).toString();
 
@@ -94,6 +96,14 @@ public class LinkModel {
        // Thread.sleep(1000);
         return null;
     }
+
+    private String readFile(File file, Charset encoding) throws IOException
+    {
+        String path = file.getPath();
+        byte[] encoded = Files.readAllBytes(Paths.get(path));
+        return new String(encoded, encoding);
+    }
+
 
     public void findRandomLinkAndClick(){
         driver.get(this.url);
