@@ -63,9 +63,11 @@ public class Device {
 
     }
 
-    public void start(){
+    public void start() throws Exception {
         this.turnOnMobileInternet();
-        this.isConnectedToInternet();
+        if(!this.isConnectedToInternet()){
+            throw new Exception("Failed to connect to mobile internet!");
+        }
     }
 
     public WebDriverWrapper getWebDriverWrapper (){
