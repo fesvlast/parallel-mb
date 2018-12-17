@@ -42,6 +42,12 @@ public class LinkModel {
             wait.until(expectation);
         } catch (Throwable error) {
            System.out.println("Failed to wait page loaded");
+           this.driver.navigate().refresh();
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
