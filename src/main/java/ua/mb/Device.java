@@ -67,9 +67,9 @@ public class Device {
         this.turnOnMobileInternet();
         if(!this.isConnectedToInternet()){
             try {
-                throw new Exception("Failed to connect to mobile internet!");
+                throw new Exception("Failed to connect to mobile internet!!");
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println(e);
             }
         }
     }
