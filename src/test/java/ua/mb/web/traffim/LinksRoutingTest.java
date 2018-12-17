@@ -20,7 +20,7 @@ public class LinksRoutingTest {
 
 
     @Test
-    public void scrollNewsSiteTest() throws Exception {
+    public void scrollNewsSiteTest() throws InterruptedException {
         this.device = new Device(this.deviceId, this.userAgent);
         this.device.start();
         LinkModel model = new LinkModel(device.getWebDriverWrapper());

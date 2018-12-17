@@ -47,7 +47,7 @@ public class Device {
                 return true;
             }
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             }catch (InterruptedException ex){
                 System.out.println(ex);
                 return false;
@@ -63,10 +63,14 @@ public class Device {
 
     }
 
-    public void start() throws Exception {
+    public void start() {
         this.turnOnMobileInternet();
         if(!this.isConnectedToInternet()){
-            throw new Exception("Failed to connect to mobile internet!");
+            try {
+                throw new Exception("Failed to connect to mobile internet!");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
