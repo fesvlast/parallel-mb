@@ -30,3 +30,4 @@ public class CommandBuilder {
         return "adb devices";
     }
 }
+
