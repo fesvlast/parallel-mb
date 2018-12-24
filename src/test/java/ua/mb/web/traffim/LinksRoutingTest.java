@@ -1,8 +1,6 @@
 package ua.mb.web.traffim;
 
-import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ua.mb.Device;
@@ -56,7 +54,6 @@ public class LinksRoutingTest {
 
     @AfterMethod
     public void afterClass(ITestResult result) {
-        System.out.println("Status: " +result.getStatus());
         this.sender.sendFinalStatusStatistic(result.getStatus());
         device.stop();
     }

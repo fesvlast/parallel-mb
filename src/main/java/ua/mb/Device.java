@@ -39,6 +39,12 @@ public class Device {
         executor.executeCommand(command);
     }
 
+    public void forceStopChrome(){
+        String command = this.command.forceStopChrome(this.deviceId);
+        executor.executeCommand(command);
+    }
+
+
     public boolean isConnectedToInternet(){
         String command = this.command.isConnectedToInternet(this.deviceId);
         String errorMsg = "ping: unknown host www.google.com";
@@ -60,7 +66,7 @@ public class Device {
     public void stop(){
         this.wdw.quit();
         this.turnOffMobileInternet();
-
+        this.forceStopChrome();
     }
 
     public void start() {

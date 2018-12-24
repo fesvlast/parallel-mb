@@ -26,6 +26,10 @@ public class CommandBuilder {
         return "adb -s " + deviceId + " shell ping -w 1 -q www.google.com";
     }
 
+    public String forceStopChrome(String deviceId){
+        return "adb -s " + deviceId + " shell am force-stop com.android.chrome";
+    }
+
     public String getListOfConnectedDevices(){
         return "adb devices";
     }
