@@ -66,7 +66,7 @@ public class Device {
     public void stop(){
         this.wdw.quit();
         this.turnOffMobileInternet();
-        this.forceStopChrome();
+        //this.forceStopChrome();
     }
 
     public void start() {
