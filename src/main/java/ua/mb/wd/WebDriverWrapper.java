@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class WebDriverWrapper {
 
     private WebDriver driver;
@@ -37,7 +39,8 @@ public class WebDriverWrapper {
         options.setExperimentalOption("androidDeviceSerial", deviceId);
         options.setCapability("applicationCacheEnabled", false);
         this.driver = new ChromeDriver(options);
-        this.wait = new WebDriverWait(driver, 10);
+        driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        this.wait = new WebDriverWait(driver, 60);
     }
 
 

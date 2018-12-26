@@ -44,7 +44,7 @@ public class MobileFactory {
      * @return
      * @throws Exception
      */
-    public List<String> getAllRegisteredDeviceID() throws Exception {
+    public List<String> getAllRegisteredDeviceID() {
         CommandExecutor exec = new CommandExecutor();
         String buffer = exec.executeCommand(new CommandBuilder().getListOfConnectedDevices());
 
@@ -52,7 +52,7 @@ public class MobileFactory {
         Matcher m = Pattern.compile("\\w{10,40}\\s+(offline|device)").matcher(buffer);
         while (m.find()) {
             if(m.group().contains("offline")){
-              System.err.println("Device is offline: " +m.group());
+              System.err.println("Device is offline: " + m.group());
             }else {
                 list.add(m.group().replace("device", "").trim());
             }
