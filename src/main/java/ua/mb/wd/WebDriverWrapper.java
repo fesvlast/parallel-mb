@@ -40,6 +40,7 @@ public class WebDriverWrapper {
         options.setCapability("applicationCacheEnabled", false);
         this.driver = new ChromeDriver(options);
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
         this.wait = new WebDriverWait(driver, 60);
     }
 

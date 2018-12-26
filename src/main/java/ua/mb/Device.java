@@ -48,7 +48,7 @@ public class Device {
     public boolean isConnectedToInternet(){
         String command = this.command.isConnectedToInternet(this.deviceId);
         String errorMsg = "ping: unknown host www.google.com";
-        for (int i = 0; i < 5 ; i++) {
+        /*for (int i = 0; i < 5 ; i++) {
             if (!executor.executeCommand(command).contains(errorMsg)){
                 return true;
             }
@@ -59,7 +59,7 @@ public class Device {
                 return false;
             }
         }
-
+*/
         return false;
     }
 
