@@ -4,6 +4,7 @@ import ua.mb.Device;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,9 +49,13 @@ public class MobileFactory {
         String buffer = exec.executeCommand(new CommandBuilder().getListOfConnectedDevices());
 
         List<String> list = new ArrayList<>();
-        Matcher m = Pattern.compile("\\w{10,15}").matcher(buffer);
+        Matcher m = Pattern.compile("\\w{10,40}\\s+(offline|device)").matcher(buffer);
         while (m.find()) {
-            list.add(m.group());
+            if(m.group().contains("offline")){
+              System.err.println("Device is offline: " +m.group());
+            }else {
+                list.add(m.group().replace("device", "").trim());
+            }
         }
         return list;
     }
