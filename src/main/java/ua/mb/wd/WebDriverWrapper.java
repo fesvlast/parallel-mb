@@ -31,7 +31,8 @@ public class WebDriverWrapper {
         options.setPageLoadStrategy(PageLoadStrategy.NONE);
         options.addArguments("disable-infobars");
         options.addArguments("start-maximized");
-        options.addArguments("--disable-notifications");
+        options.addArguments("disable-notifications");
+        options.addArguments("disable-web-security");
         options.setExperimentalOption("androidPackage", "com.android.chrome");
         options.setExperimentalOption("androidDeviceSerial", deviceId);
         options.setCapability("applicationCacheEnabled", false);

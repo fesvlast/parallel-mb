@@ -1,6 +1,7 @@
 package ua.mb.web.traffim;
 
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import ua.mb.Device;
@@ -16,6 +17,9 @@ public class LinksRoutingTest {
     private String userAgent;
 
     private StatisticSender sender;
+
+    private boolean testStatus = false;
+
 
     public LinksRoutingTest(String deviceId, String userAgent){
         this.deviceId = deviceId;
@@ -49,12 +53,13 @@ public class LinksRoutingTest {
         model.switchToOpenBrowserTab();
         model.scrollToBottomAndUp();
         model.scrollToBottomAndUp();
+        this.testStatus = true;
     }
 
 
-    @AfterMethod
-    public void afterClass(ITestResult result) {
-        this.sender.sendFinalStatusStatistic(result.getStatus());
+    @AfterClass
+    public void afterClass() {
+        this.sender.sendFinalStatusStatistic(this.testStatus);
         device.stop();
     }
 

@@ -26,9 +26,9 @@ public class StatisticSender {
         }
     }
 
-    public void sendFinalStatusStatistic(int status){
+    public void sendFinalStatusStatistic(boolean status){
         String url;
-        if(status == 1){
+        if(status){
            url = STATISTIC_URL+"success-" + deviceId;
         }else {
             url = STATISTIC_URL+"fail-" + deviceId;
