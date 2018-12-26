@@ -27,7 +27,7 @@ task killAdb(type:Exec) {
 }
 
 test{
-    maxParallelForks = 1
+    maxParallelForks = 10
 
     useTestNG {
         suites 'src/test/java/testngFactoryTraffim.xml'
