@@ -21,10 +21,10 @@ task startAdb(type:Exec) {
 
 }
 
-task killAdb(type:Exec) {
+/*task killAdb(type:Exec) {
     commandLine = ['cmd', '/c', ADB_HOME+'adb kill-server']
     println 'Kill ADB!!!!!!!!!'
-}
+}*/
 
 test{
     maxParallelForks = 10
@@ -35,7 +35,7 @@ test{
 }
 
 test.dependsOn(startAdb)
-killAdb.dependsOn(test)
+//killAdb.dependsOn(test)
 
 dependencies {
     testCompile 'org.testng:testng:6.10'
