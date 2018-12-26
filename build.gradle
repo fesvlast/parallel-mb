@@ -27,7 +27,7 @@ task startAdb(type:Exec) {
 }*/
 
 test{
-    maxParallelForks = 10
+    maxParallelForks = 1
 
     useTestNG {
         suites 'src/test/java/testngFactoryTraffim.xml'
