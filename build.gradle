@@ -12,19 +12,21 @@ repositories {
 }
 
 
-def ADB_HOME = System.getenv()['ADB_HOME']
+//git statdef ADB_HOME = System.getenv()['ADB_HOME']
 
+/*
 task startAdb(type:Exec) {
     println ADB_HOME
     commandLine = ['cmd', '/c', ADB_HOME+'adb start-server']
     println 'Start ADB!!!!'
 
 }
+*/
 
-task killAdb(type:Exec) {
+/*task killAdb(type:Exec) {
     commandLine = ['cmd', '/c', ADB_HOME+'adb kill-server']
     println 'Kill ADB!!!!!!!!!'
-}
+}*/
 
 test{
     maxParallelForks = 1
@@ -34,8 +36,8 @@ test{
     }
 }
 
-test.dependsOn(startAdb)
-killAdb.dependsOn(test)
+//test.dependsOn(startAdb)
+//killAdb.dependsOn(test)
 
 dependencies {
     testCompile 'org.testng:testng:6.10'
