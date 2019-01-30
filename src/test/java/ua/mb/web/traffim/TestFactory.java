@@ -21,6 +21,7 @@ public class TestFactory {
                     .getRandomUserAgent()
                     .getAgentStr();
             methods[i] = new LinksRoutingTest(list.get(i), userAgentStr);
+            Thread.sleep(1000);
         }
 
         return methods;
