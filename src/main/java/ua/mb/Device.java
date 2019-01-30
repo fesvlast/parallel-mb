@@ -64,18 +64,19 @@ public class Device {
     public void stop(){
         this.wdw.quit();
         this.turnOffMobileInternet();
-        this.forceStopChrome();
+        //this.forceStopChrome();
     }
 
     public void start() {
-        this.turnOnMobileInternet();
-       if(!this.isConnectedToInternet()){
+       /*if(!this.isConnectedToInternet()){
             try {
                 throw new Exception("Failed to connect to mobile internet!!");
             } catch (Exception e) {
                 System.err.println(e);
             }
         }
+*/
+        this.turnOnMobileInternet();
     }
 
     public WebDriverWrapper getWebDriverWrapper (){
